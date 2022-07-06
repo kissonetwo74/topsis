@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<div class="container">
+    <h2 class="bg-success text-white text-center font-weight-light shadow p-2 mb-3 rounded">Hasil Penilaian Metode TOPSIS</h2>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Data Awal</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Normalisasi</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="wnorm-tab" data-toggle="tab" href="#wnorm" role="tab" aria-controls="wnorm" aria-selected="false">Normalisasi Bobot</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="mms-tab" data-toggle="tab" href="#mms" role="tab" aria-controls="mms" aria-selected="false">Solusi IAD</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Hasil</a>
+        </li>
+      </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <table class="table table-striped table-hover shadow p-3 mb-5 bg-white rounded">
+                <thead class="thead-dark">
+                    <th>Alternatif</th>
+                    {% for k in data %}
+                    <th>{{k.nama}}</th>
+                    {% endfor %}
+                        
+                </thead>
+                <tbody>
+                    {% for r,a in mt|zip(data1) %}
+                    <tr>
+                        <th>{{a.nama}}</th>
+                        {% for i in data %}
+                            <td>{{r[loop.index0]|float}}</td>
+                        {% endfor %}
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>        
+            </table>
+        </div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <table class="table table-striped table-hover shadow p-3 mb-5 bg-white rounded">
+                <thead class="thead-dark">
+                    <th>Alternatif</th>
+                    {% for k in data %}
+                    <th>{{k.nama}}</th>
+                    {% endfor %}
+                        
+                </thead>
+                <tbody>
+                    {% for r,a in normal|zip(data1) %}
+                    <tr>
+                        <th>{{a.nama}}</th>
+                        {% for i in data %}
+                            <td>{{'%0.4f' %r[loop.index0]|float}}</td>
+                        {% endfor %}
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>        
+            </table>
+        </div>
+        <div class="tab-pane fade" id="wnorm" role="tabpanel" aria-labelledby="wnorm-tab">
+            <table class="table table-striped table-hover shadow p-3 mb-5 bg-white rounded">
+                <thead class="thead-dark">
+                    <th>Alternatif</th>
+                    {% for k in data %}
+                    <th>{{k.nama}}</th>
+                    {% endfor %}
+                        
+                </thead>
+                <tbody>
+                    {% for r,a in wnorm|zip(data1) %}
+                    <tr>
+                        <th>{{a.nama}}</th>
+                        {% for i in data %}
+                            <td>{{'%0.4f' %r[loop.index0]|float}}</td>
+                        {% endfor %}
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>        
+            </table>
+        </div>
+        <!-- Ideal and anti ideal solution -->
+        <div class="tab-pane fade" id="mms" role="tabpanel" aria-labelledby="mms-tab">
+            <table class="table table-striped table-hover shadow p-3 mb-5 bg-white rounded">
+                <thead class="thead-dark">
+                    <th></th>
+                    {% for k in data %}
+                    <th>{{k.nama}}</th>
+                    {% endfor %}
+                        
+                </thead>
+                <tbody>
+                    {% for r,a in mms|zip(iad) %}
+                    <tr>
+                        <th>{{a}}</th>
+                        {% for i in data %}
+                            <td>{{'%0.4f' %r[loop.index0]|float}}</td>
+                        {% endfor %}
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>        
+            </table>
+        </div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            <table class="table table-striped table-hover shadow p-3 mb-5 bg-white rounded">
+                <thead class="thead-dark">
+                    <th>Alternatif</th>
+                    <th>D+</th>
+                    <th>D-</th>
+                    <th>Hasil</th>
+                </thead>
+                <tbody>
+                    {% for row,a,b in cf|zip(data1,dmxn) %}
+                    <tr>
+                        <th>{{a.nama}}</th>
+                        <td>{{'%0.4f' %b[0]}}</td>
+                        <td>{{'%0.4f' %b[1]}}</td>
+                        <td>{{'%0.4f' %row}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>        
+            </table>
+        </div>
+    </div>
+    
+</div>
+    
+    
+{% endblock content %}

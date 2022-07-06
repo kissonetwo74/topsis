@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    
+<div class="container border-left border-right">
+    <h2 class="text-center font-weight-light bg-success text-white shadow p-2 mb-3 rounded">Sub Kriteria</h2>
+    <form action="" method="post">
+        <div class="form-group">
+            {{form.csrf_token}}
+        </div>
+        <div class="form-group">
+            {{form.nama.label}}
+            {{form.nama(class="form-control", placeholder="Sub Kriteria")}}
+        </div>
+        <div class="form-group">
+            {{form.bobot.label}}
+            {{form.bobot(class="form-control", placeholder="Bobot nilai")}}
+        </div>
+        <div class="form-gorup">
+            <select class="form-control" name="kri" id="kri">
+            {% for row in data %}
+                <option value="{{row.id}}">{{row.nama}}</option>
+            {% endfor %}
+            </select>
+        </div>
+        <br>
+        <input class="btn btn-primary" type="submit" value="Submit">
+    </form>
+    <hr class="my-4">
+    <div class="container">
+        <table class="table table-hover table-striped shadow p-3 mb-5 bg-white rounded">
+            <thead>
+                <th scope="col">No</th>
+                <th scope="col">Nama</th>
+                <th scope="col">Bobot</th>
+                <th scope="col">Id Kriteria</th>
+                <th scope="col">Aksi</th>
+            </thead>
+            <tbody>
+                
+                {% for row in data2 %}
+                <tr>
+                    <td>{{loop.index}}</td>
+                    <td>{{row.nama}}</td>
+                    <td>{{row.nilai}}</td>
+                    <td>{{row.kriteria_id}}</td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="container">
+    <form action="/clear_tbsubkriteria">
+        <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Clear All Subkriteria
+    </button>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div> -->
+            <div class="modal-body">
+            Yakin Hapus seluruh subkriteria
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Clear</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    </form>
+</div>
+
+{% endblock content %}
+    

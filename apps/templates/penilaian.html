@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container border-left border-right"> 
+    <br>
+    <h3 class="font-weight-bolder">{{data.nama}}</h3> 
+    <hr class="my-4">
+    <form action="/input_penilaian" method="post">
+        {{csrf_token}}
+        <input type="hidden" name="ida" value="{{data.id}}">
+        <table class="table">
+            <thead>
+                <th>No</th>
+                <th>Kriteria</th>
+                <th>Bobot</th>
+                <th>Penilaian</th>
+            </thead>
+            <tbody>
+            
+            {% for row in data1 %}
+                <tr>
+                    <td>{{loop.index}}</td>
+                    <td>
+                        {{row.nama}}
+                        
+                    </td>
+                    <td>
+                        <label for="">{{row.bobot}}</label>
+                        <input type="hidden" name="k{{loop.index}}" value="{{row.bobot}}">
+                    </td>
+                    <td>
+                        <select name="sk{{loop.index}}" id="">
+                        {% for row1 in data2 %}
+                            <option value="{{row1.nilai}}">{{row1.nama}}</option>
+                        {% endfor %}
+                        </select>     
+                    </td>
+                </tr>
+            {% endfor %}
+                
+            </tbody>
+        </table>
+        <input class="btn btn-primary" type="submit" value="Submit">
+    </form>
+</div>
+{% endblock content %}
